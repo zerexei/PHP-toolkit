@@ -1,11 +1,11 @@
 {
-  "name": "zerexei/laravel-toolkit",
-  "description": "A collection of reusable Laravel traits, helpers, and extensions",
+  "name": "zerexei/PHP-toolkit",
+  "description": "A collection of reusable PHP traits, helpers, and extensions",
   "license": "MIT",
   "type": "library",
   "autoload": {
     "psr-4": {
-      "Zerexei\\LaravelToolkit\\": "src/"
+      "Zerexei\\PHPToolkit\\": "src/"
     }
   },
   "authors": [
