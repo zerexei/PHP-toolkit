@@ -1,32 +1,33 @@
-# laravel-toolkit
+# PHP-toolkit
 
-A collection of reusable Laravel traits, utilities, and extensions for building applications faster.
+A collection of reusable PHP traits, utilities, and extensions designed to help developers build applications faster.
 
 ## Features
 
-* Cacheable models and data
-* Activity logging integration
-* Searchable models
-* More reusable Laravel components coming soon
+* Cacheable components and data handling
+* Activity logging support
+* Searchable functionality
+* Reusable PHP utilities and extensions
+* More lightweight PHP components coming soon
 
 ## Installation
 
 Install the package via Composer:
 
 ```bash
-composer require zerexei/laravel-toolkit
+composer require zerexei/php-toolkit
 ```
 
 ## Usage
 
 ### Cacheable
 
-Add caching support to your model or class:
+Add caching support to your class:
 
 ```php
-use Zerexei\LaravelToolkit\Traits\Cacheable;
+use Zerexei\PhpToolkit\Traits\Cacheable;
 
-class Post extends Model
+class Post
 {
     use Cacheable;
 }
@@ -34,12 +35,12 @@ class Post extends Model
 
 ### HasActivityLogs
 
-Add activity logging support using Spatie Activity Log:
+Add activity logging support:
 
 ```php
-use Zerexei\LaravelToolkit\Traits\HasActivityLogs;
+use Zerexei\PhpToolkit\Traits\HasActivityLogs;
 
-class User extends Model
+class User
 {
     use HasActivityLogs;
 }
@@ -50,9 +51,9 @@ class User extends Model
 Add searchable functionality:
 
 ```php
-use Zerexei\LaravelToolkit\Traits\Searchable;
+use Zerexei\PhpToolkit\Traits\Searchable;
 
-class Post extends Model
+class Post
 {
     use Searchable;
 }
@@ -61,15 +62,14 @@ class Post extends Model
 ## Requirements
 
 * PHP 8.2+
-* Laravel 11+
-* `spatie/laravel-activitylog`
+* Composer
 
 ## Package Information
 
 ```json
 {
-  "name": "zerexei/laravel-toolkit",
-  "description": "Laravel toolkit containing reusable traits, helpers, and extensions",
+  "name": "zerexei/php-toolkit",
+  "description": "A PHP toolkit containing reusable traits, helpers, and extensions",
   "license": "MIT"
 }
 ```
@@ -80,43 +80,38 @@ The following features are planned for future releases:
 
 ### Traits
 
-* [x] `Cacheable` — Add caching support for models and data
-* [x] `HasActivityLogs` — Integrate activity logging with Spatie Activity Log
-* [x] `Searchable` — Add simple model searching capabilities
-* [ ] `HasUuid` — UUID support for models
+* [x] `Cacheable` — Add caching support for classes and data
+* [x] `HasActivityLogs` — Add reusable activity logging capabilities
+* [x] `Searchable` — Add simple searching capabilities
+* [ ] `HasUuid` — UUID generation and handling
 * [ ] `HasSlug` — Automatic slug generation
-* [ ] `HasStatus` — Model status management helpers
+* [ ] `HasStatus` — Status management helpers
 * [ ] `HasPermissions` — Reusable permission handling
 * [ ] `HasMedia` — Common media/file attachment helpers
-* [ ] `HasFilters` — Reusable query filtering support
+* [ ] `HasFilters` — Reusable filtering support
 
 ### Utilities
 
 * [ ] String manipulation helpers
 * [ ] Array manipulation helpers
 * [ ] Date/time helpers
-* [ ] Common Laravel validation helpers
-
-### Eloquent Enhancements
-
-* [ ] Query builder macros
-* [ ] Model scopes collection
-* [ ] Relationship helpers
-* [ ] Model event utilities
+* [ ] Common PHP validation helpers
+* [ ] File handling utilities
 
 ### Developer Experience
 
-* [ ] Artisan commands for package setup
-* [ ] Configuration publishing
+* [ ] Configuration support
 * [ ] Better documentation and examples
-* [ ] Test coverage improvements
+* [ ] Expanded test coverage
+* [ ] Additional reusable PHP components
 
 ## Long-Term Goals
 
-* Keep the package lightweight and framework-friendly
-* Provide reusable components for common Laravel application patterns
-* Avoid unnecessary dependencies while improving developer productivity
-
+* Keep the toolkit lightweight and framework agnostic
+* Support modern PHP development practices
+* Avoid unnecessary dependencies
+* Provide reusable solutions for common application patterns
+* Maintain compatibility across different PHP projects and frameworks
 
 ## License
 
