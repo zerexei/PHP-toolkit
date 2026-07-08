@@ -1,11 +1,11 @@
 {
-  "name": "zerexei/laravel-model-helper",
-  "description": "Laravel Model helpers",
+  "name": "zerexei/laravel-toolkit",
+  "description": "A collection of reusable Laravel traits, helpers, and extensions",
   "license": "MIT",
-  "type": "project",
+  "type": "library",
   "autoload": {
     "psr-4": {
-      "Zerexei\\LaravelModelHelper\\": "src/"
+      "Zerexei\\LaravelToolkit\\": "src/"
     }
   },
   "authors": [
