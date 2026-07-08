@@ -1,16 +1,29 @@
-# PHP-toolkit
+# Laravel & PHP Toolkit
 
-A collection of reusable PHP traits, utilities, and extensions designed to help developers build applications faster.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/zerexei/php-toolkit.svg?style=flat-square)](https://packagist.org/packages/zerexei/php-toolkit)
+[![Total Downloads](https://img.shields.io/packagist/dt/zerexei/php-toolkit.svg?style=flat-square)](https://packagist.org/packages/zerexei/php-toolkit)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![PHP Version Compatibility](https://img.shields.io/badge/php-8.2%2B-blue.svg?style=flat-square)](https://php.net)
+[![Laravel Version Compatibility](https://img.shields.io/badge/laravel-12.x-red.svg?style=flat-square)](https://laravel.com)
 
-## Features
+A collection of lightweight, modern, and highly reusable PHP traits, Eloquent helpers, and utility extensions designed to supercharge your Laravel development workflow.
 
-* Cacheable components and data handling
-* Activity logging support
-* Searchable functionality
-* Reusable PHP utilities and extensions
-* More lightweight PHP components coming soon
+---
 
-## Installation
+## ⚡ Key Features
+
+*   **`Cacheable`** — Intuitive Eloquent instance caching API with custom TTLs and auto-generated keys.
+*   **`HasActivityLogs`** — Boilerplate-free Spatie Activitylog integration configured with smart defaults.
+*   **`Searchable`** — Query-builder scope for full-text term searches matching prefixes.
+*   **`HasUuid`** — Automatically generates secure UUIDs (v4) upon model creation.
+*   **`HasSlug`** — Automatic generation of unique, collision-resistant slugs from a source field.
+*   **`HasStatus`** — Status state management, validation checks, and query scoping.
+*   **`HasFilters`** — Flexible pipeline helper to filter query builders via closures or dedicated classes.
+*   **`StrHelper` / `ArrHelper`** — Context-rich utilities to manipulate strings and arrays cleanly.
+
+---
+
+## 📦 Installation
 
 Install the package via Composer:
 
@@ -18,101 +31,197 @@ Install the package via Composer:
 composer require zerexei/php-toolkit
 ```
 
-## Usage
+---
+
+## 🛠️ Usage Guides
 
 ### Cacheable
-
-Add caching support to your class:
+Add instance caching to any Eloquent model. It dynamically generates cache keys based on model type, primary key, and the `updated_at` timestamp.
 
 ```php
-use Zerexei\PhpToolkit\Traits\Cacheable;
+use Zerexei\PHPToolkit\Traits\Cacheable;
 
-class Post
+class Post extends Model
 {
     use Cacheable;
 }
+
+// Check cache, retrieve, or store values
+$post = Post::find(1);
+
+if ($post->hasCache()) {
+    $cachedData = $post->getCache();
+}
+
+$post->putCache('custom-serialized-data', 3600);
+$post->forgetCache();
 ```
 
-### HasActivityLogs
+---
 
-Add activity logging support:
+### HasActivityLogs
+Integrate [Spatie's Laravel Activitylog](https://github.com/spatie/laravel-activitylog) with smart out-of-the-box settings (auto-headline model names, excludes sensitive fields, and logs request IPs).
 
 ```php
-use Zerexei\PhpToolkit\Traits\HasActivityLogs;
+use Zerexei\PHPToolkit\Traits\HasActivityLogs;
 
-class User
+class User extends Model
 {
     use HasActivityLogs;
 }
 ```
 
-### Searchable
+---
 
-Add searchable functionality:
+### Searchable
+Enable simple, multi-column search on your models using SQL `LIKE` conditions.
 
 ```php
-use Zerexei\PhpToolkit\Traits\Searchable;
+use Zerexei\PHPToolkit\Traits\Searchable;
 
-class Post
+class Product extends Model
 {
     use Searchable;
 }
+
+// Query products matching "macbook pro" across title and description
+$products = Product::search(['title', 'description'], 'macbook pro')->get();
 ```
 
-## Requirements
+---
 
-* PHP 8.2+
-* Composer
+### HasUuid
+Instruct Eloquent to auto-generate and manage UUID keys (UUIDv4) on model creation.
 
-## Package Information
+```php
+use Zerexei\PHPToolkit\Traits\HasUuid;
 
-```json
+class Invoice extends Model
 {
-  "name": "zerexei/php-toolkit",
-  "description": "A PHP toolkit containing reusable traits, helpers, and extensions",
-  "license": "MIT"
+    use HasUuid;
 }
 ```
 
-## Roadmap / TODO (MVP)
+---
 
-The following features are planned for future releases:
+### HasSlug
+Automatically generate slugs on model saving. Handles slug collisions automatically by appending increments (e.g. `my-slug-1`).
 
-### Traits
+```php
+use Zerexei\PHPToolkit\Traits\HasSlug;
 
-* [x] `Cacheable` — Add caching support for classes and data
-* [x] `HasActivityLogs` — Add reusable activity logging capabilities
-* [x] `Searchable` — Add simple searching capabilities
-* [ ] `HasUuid` — UUID generation and handling
-* [ ] `HasSlug` — Automatic slug generation
-* [ ] `HasStatus` — Status management helpers
-* [ ] `HasPermissions` — Reusable permission handling
-* [ ] `HasMedia` — Common media/file attachment helpers
-* [ ] `HasFilters` — Reusable filtering support
+class Article extends Model
+{
+    use HasSlug;
 
-### Utilities
+    // Optional overrides:
+    public function slugSource(): string
+    {
+        return 'title'; // Source column (Default: 'title')
+    }
 
-* [ ] String manipulation helpers
-* [ ] Array manipulation helpers
-* [ ] Date/time helpers
-* [ ] Common PHP validation helpers
-* [ ] File handling utilities
+    public function slugDestination(): string
+    {
+        return 'slug'; // Destination column (Default: 'slug')
+    }
+}
+```
 
-### Developer Experience
+---
 
-* [ ] Configuration support
-* [ ] Better documentation and examples
-* [ ] Expanded test coverage
-* [ ] Additional reusable PHP components
+### HasStatus
+Validate, mutate, and scope models by their status.
 
-## Long-Term Goals
+```php
+use Zerexei\PHPToolkit\Traits\HasStatus;
 
-* Keep the toolkit lightweight and framework agnostic
-* Support modern PHP development practices
-* Avoid unnecessary dependencies
-* Provide reusable solutions for common application patterns
-* Maintain compatibility across different PHP projects and frameworks
+class Project extends Model
+{
+    use HasStatus;
 
-## License
+    public function getStatuses(): array
+    {
+        return ['draft', 'active', 'completed', 'archived'];
+    }
+}
 
-The MIT License (MIT).
+// Usage
+$project->setStatus('active'); // Throws InvalidArgumentException if invalid
+$project->isStatus('completed'); // false
+
+// Scope queries
+$activeProjects = Project::ofStatus('active')->get();
+$filteredProjects = Project::ofStatus(['active', 'completed'])->get();
+```
+
+---
+
+### HasFilters
+Apply request-driven filters or query builder callbacks cleanly.
+
+```php
+use Zerexei\PHPToolkit\Traits\HasFilters;
+
+class Order extends Model
+{
+    use HasFilters;
+}
+
+// 1. Using a closure
+$orders = Order::filter(function ($query) {
+    $query->where('amount', '>', 100);
+})->get();
+
+// 2. Using a dedicated Filter Class (must implement an `apply` method)
+$orders = Order::filter(\App\Filters\OrderFilter::class)->get();
+```
+
+---
+
+## 🧰 Utility Helpers
+
+### StrHelper
+Common string manipulations.
+
+```php
+use Zerexei\PHPToolkit\Utilities\StrHelper;
+
+// Get initials
+StrHelper::initials('Taylor Otwell'); // "TO"
+
+// Estimate reading time in minutes
+StrHelper::readingTime($longText, $wordsPerMinute = 200); // 4
+
+// Truncate to exact length while preserving word boundaries
+StrHelper::truncateWords($text, $limit = 80);
+```
+
+### ArrHelper
+Manipulate PHP arrays effortlessly.
+
+```php
+use Zerexei\PHPToolkit\Utilities\ArrHelper;
+
+// Group items by a key path (supports arrays & objects)
+ArrHelper::groupByKey($users, 'role_id');
+
+// Remove all null values recursively from nested arrays
+ArrHelper::filterNullRecursive($dirtyArray);
+
+// Safely rename associative array keys
+ArrHelper::renameKeys($data, ['user_id' => 'id', 'user_email' => 'email']);
+```
+
+---
+
+## 📋 Requirements
+
+*   **PHP**: `8.2` or higher
+*   **Laravel Framework**: `^12.0`
+*   **Composer**
+
+---
+
+## 📄 License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.

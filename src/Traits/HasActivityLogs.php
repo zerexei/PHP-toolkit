@@ -1,6 +1,6 @@
 <?php
 
-namespace Zerexei\LaravelModelHelper;
+namespace Zerexei\PHPToolkit\Traits;
 
 use Spatie\Activitylog\Traits\LogsActivity as SpatieLogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
@@ -10,25 +10,26 @@ trait HasActivityLogs
 {
     use SpatieLogsActivity;
 
-    public function tapActivity(Activity $activity)
+    /**
+     * Tap into the activity log before saving.
+     */
+    public function tapActivity(Activity $activity): void
     {
         $request = request();
-        $activity->ip_address = $request->ip();
+        $activity->ip_address = $request ? $request->ip() : null;
         $activity->navigation = "Model";
     }
 
+    /**
+     * Set the default activity log options.
+     */
     public function getActivitylogOptions(): LogOptions
     {
-        //
         $modelName = str(class_basename($this::class))->headline()->value;
 
-        //
         $getDescription = function (string $eventName) use ($modelName) {
-            //
             $eventName = str($eventName)->headline()->value;
-
-            //
-            return "$modelName has been $eventName";
+            return "{$modelName} has been {$eventName}";
         };
 
         return LogOptions::defaults()
