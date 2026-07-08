@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/zerexei/php-toolkit.svg?style=flat-square)](https://packagist.org/packages/zerexei/php-toolkit)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![PHP Version Compatibility](https://img.shields.io/badge/php-8.2%2B-blue.svg?style=flat-square)](https://php.net)
-[![Laravel Version Compatibility](https://img.shields.io/badge/laravel-12.x-red.svg?style=flat-square)](https://laravel.com)
+[![Laravel Components Compatibility](https://img.shields.io/badge/laravel--components-12.x-red.svg?style=flat-square)](https://laravel.com)
 
 A collection of lightweight, modern, and highly reusable PHP traits, Eloquent helpers, and utility extensions designed to supercharge your Laravel development workflow.
 
@@ -217,7 +217,7 @@ ArrHelper::renameKeys($data, ['user_id' => 'id', 'user_email' => 'email']);
 ## 📋 Requirements
 
 *   **PHP**: `8.2` or higher
-*   **Laravel Framework**: `^12.0`
+*   **Laravel Components (`illuminate/database`, `illuminate/support`)**: `^12.0`
 *   **Composer**
 
 ---

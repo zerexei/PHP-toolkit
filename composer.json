@@ -1,6 +1,7 @@
 {
-  "name": "zerexei/PHP-toolkit",
-  "description": "A collection of reusable PHP traits, helpers, and extensions",
+  "name": "zerexei/php-toolkit",
+  "version": "0.1.0",
+  "description": "A collection of reusable Laravel & PHP traits, helpers, and extensions",
   "license": "MIT",
   "type": "library",
   "autoload": {
@@ -15,7 +16,8 @@
     }
   ],
   "require": {
-    "laravel/framework": "^12.0",
+    "illuminate/database": "^12.0",
+    "illuminate/support": "^12.0",
     "spatie/laravel-activitylog": "^4.8 || ^5.0"
   }
 }

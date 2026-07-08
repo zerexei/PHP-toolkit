@@ -5,6 +5,7 @@ namespace Zerexei\PHPToolkit\Traits;
 use Spatie\Activitylog\Traits\LogsActivity as SpatieLogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Str;
 
 trait HasActivityLogs
 {
@@ -25,10 +26,10 @@ trait HasActivityLogs
      */
     public function getActivitylogOptions(): LogOptions
     {
-        $modelName = str(class_basename($this::class))->headline()->value;
+        $modelName = Str::headline(class_basename($this::class));
 
         $getDescription = function (string $eventName) use ($modelName) {
-            $eventName = str($eventName)->headline()->value;
+            $eventName = Str::headline($eventName);
             return "{$modelName} has been {$eventName}";
         };
 
